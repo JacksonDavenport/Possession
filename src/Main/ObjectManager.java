@@ -7,7 +7,11 @@ import Objects.Building;
 
 public class ObjectManager implements ActionManager, MovementManager{
 
-	Actor a;
+	Actor actor;
+	
+	public ObjectManager(Actor a) {
+		this.actor = a;
+	}
 	
 	public void action() {
 		
@@ -118,11 +122,15 @@ public class ObjectManager implements ActionManager, MovementManager{
 	}
 	
 	public boolean containsObject(Actor a) {
-		return a.getHitBox().contains(a.getHitBox());
+		return actor.getHitBox().contains(a.getHitBox());
 	}
 	
 	public boolean intersectsObject(Actor a) {
-		return a.getHitBox().intersects(a.getHitBox());
+		return actor.getHitBox().intersects(a.getHitBox());
+	}
+	
+	public void setActor(Actor a) {
+		this.actor = a;
 	}
 
 }

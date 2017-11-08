@@ -9,6 +9,7 @@ public class PlayerManager extends ObjectManager{
 	private Player player;
 	
 	public PlayerManager(Player p) {
+		super(p);
 		player = p;
 	}
 	
@@ -26,7 +27,10 @@ public class PlayerManager extends ObjectManager{
 			dy += super.distanceRemainingBottomSide(player, arena, player.getXVel(), player.getYVel());
 		
 		player.passMovement(dx, dy);
-		
+		logMovement(W, A, S, D);
+	}
+	
+	private void logMovement(boolean W, boolean A, boolean S, boolean D) {
 		if(Logger.isFinest() && (W || A || S || D)) {
 			String log = "";
 			if(W)
@@ -40,6 +44,5 @@ public class PlayerManager extends ObjectManager{
 			
 			Logger.logFinest(log + "(" + player.getXCenter() + ", " + player.getYCenter() + ")");
 		}
-
 	}
 }
