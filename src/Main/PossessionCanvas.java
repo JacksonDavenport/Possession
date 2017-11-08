@@ -33,7 +33,7 @@ public class PossessionCanvas extends PossessionDriver {
 	private BufferedImage backgroundImage;
 
 	public PossessionCanvas(){
-		BG = new Rectangle(0,0,800,600);
+		BG = new Rectangle(0,0,PossessionDriver.SCREEN_WIDTH, PossessionDriver.SCREEN_HEIGHT);
 		//buttonHeld = 0;
 		//reloadingOverride = false;
 		pauseGame = 0;

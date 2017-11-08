@@ -24,8 +24,8 @@ public abstract class PossessionDriver extends Canvas implements KeyListener, Mo
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static final int SCREEN_WIDTH = 800;
-	public static final int SCREEN_HEIGHT = 600;
+	public static final int SCREEN_WIDTH = 1000;
+	public static final int SCREEN_HEIGHT = 800;
 	
 	public static final int MAP_WIDTH_OFFSET = 16;
 	public static final int MAP_HEIGHT_OFFSET = 39;
