@@ -21,11 +21,13 @@ public class PossessionCanvas extends PossessionDriver {
 	private static ArrayList<Building> arena;
 	private static ArrayList<Enemy> enemies;
 	private static Player player;
+	
 	private PlayerManager playerManager;
+	private EnemyManager enemyManager;
 
 	Rectangle BG;
 //	private static boolean reloadingOverride;
-	private int gameState,pauseGame,frames, buttonHeld;//Button Held deals with spawn
+	private int gameState,pauseGame,frames, spawnBuffer;//Button Held deals with spawn
 	private int bulletCount, bulletTimer;
 
 	private long t0,t1;
@@ -34,7 +36,7 @@ public class PossessionCanvas extends PossessionDriver {
 
 	public PossessionCanvas(){
 		BG = new Rectangle(0,0,PossessionDriver.SCREEN_WIDTH, PossessionDriver.SCREEN_HEIGHT);
-		//buttonHeld = 0;
+		spawnBuffer = 0;
 		//reloadingOverride = false;
 		pauseGame = 0;
 		gameState = MAIN_STATE;
@@ -44,14 +46,15 @@ public class PossessionCanvas extends PossessionDriver {
 		enemies = new ArrayList<Enemy>();
 		player = new Player(this, enemies);
 				
-		playerManager = new PlayerManager(player);
 		createArena();
+		
+		playerManager = new PlayerManager(player);
+		enemyManager = new EnemyManager(player, arena);
 	}
 
 	public void draw(Graphics2D win) {
 		drawBackGround(win);
 		getKeyInput();
-		//FPS();
 		if(gameState == SPLASH_STATE)
 			splashPage(win);
 		if(gameState == MAIN_STATE)
@@ -72,6 +75,7 @@ public class PossessionCanvas extends PossessionDriver {
 	}
 
 	public void mainPage(Graphics2D win){
+		enemyManager.act();
 		for(int i = 0; i < arena.size(); i++)		//Buildings
 			{arena.get(i).act(win);}
 		for(int i = 0; i < enemies.size(); i++)		//Enemies
@@ -111,62 +115,7 @@ public class PossessionCanvas extends PossessionDriver {
 	public void checkEnemies(){
 
 	}
-	
-
-	/*
-	 *	Returns direction of the touch, -1 left/up, 1 right/down
-	 *	Static to call in move methods of both zombies and player by ex/ touchingLeftRight(this)
-	*/
-	
-	public static int touchingTopBottom(Player p){
-		int result = 0;
-		for(int i = 0; i < arena.size(); i++){
-			if(p.getYPos() == arena.get(i).getBottom() && p.getRight() >= arena.get(i).getXPos() && p.getXPos() <= arena.get(i).getRight()){
-					result = -1;
-			}
-			if(p.getBottom() == arena.get(i).getYPos() && p.getRight() >= arena.get(i).getXPos() && p.getXPos() <= arena.get(i).getRight()){
-					result = 1;
-			}
-		}
-		return result;
-	}
-	public static int touchingLeftRight(Player p){
-		int result = 0;
-		for(int i = 0; i < arena.size(); i++){
-			if(p.getXPos() == arena.get(i).getRight() && p.getYPos() <= arena.get(i).getBottom() && p.getBottom() >= arena.get(i).getYPos()){
-					result = -1;
-			}
-			if(p.getRight() == arena.get(i).getXPos() && p.getYPos() <= arena.get(i).getBottom() && p.getBottom() >= arena.get(i).getYPos()){
-					result = 1;
-			}
-		}
-		return result;
-	}
-	public static int touchingTopBottom(Enemy e){
-		int result = 0;
-		for(int i = 0; i < arena.size(); i++){
-			if(e.getYPos() == arena.get(i).getBottom() && e.getRight() >= arena.get(i).getXPos() && e.getXPos() <= arena.get(i).getRight()){
-					result = -1;
-			}
-			if(e.getBottom() == arena.get(i).getYPos() && e.getRight() >= arena.get(i).getXPos() && e.getXPos() <= arena.get(i).getRight()){
-					result = 1;
-			}
-		}
-		return result;
-	}
-	public static int touchingLeftRight(Enemy e){
-		int result = 0;
-		for(int i = 0; i < arena.size(); i++){
-			if(e.getXPos() == arena.get(i).getRight() && e.getYPos() <= arena.get(i).getBottom() && e.getBottom() >= arena.get(i).getYPos()){
-					result = -1;
-			}
-			if(e.getRight() == arena.get(i).getXPos() && e.getYPos() <= arena.get(i).getBottom() && e.getBottom() >= arena.get(i).getYPos()){
-					result = 1;
-			}
-		}
-		return result;
-	}
- 
+	 
 	public void drawUserInterface(Graphics2D win){
 
 	}
@@ -203,7 +152,7 @@ public class PossessionCanvas extends PossessionDriver {
 		//North
 
 		//
-		arena.add(new Building(100,100,150,150));
+		arena.add(new Building(26,26,150,150));
 		arena.add(new Building(500,100,150,150));
 		arena.add(new Building(100,300,150,150));
 		arena.add(new Building(500,300,150,150));
@@ -256,7 +205,9 @@ public class PossessionCanvas extends PossessionDriver {
 				}
 			}while(!willSpawn);
 			//Spawn the enemy if a valid location is chosen
-			enemies.add(new Enemy(spawnX,(int)spawnY, player));
+			Enemy e = new Enemy(spawnX, spawnY, player);
+			enemies.add(e);
+			enemyManager.addEnemy(e.hashCode(), e);
 	}
 
 	/*
@@ -275,19 +226,6 @@ public class PossessionCanvas extends PossessionDriver {
 			player.resetCharacter();
 		}
 	}
-
-	public void FPS(){
-  		t1 = System.currentTimeMillis();
-  		if(t0 == 0){
-   			t0 = System.currentTimeMillis();
-  		}
- 		if(t0 + 1000 < t1){
-   			System.out.println("Frames: " + frames);
-   			t0 = 0;
-    		frames = -1;
-  		}
-  		frames++;
- 	}
  	
 	public static int getPlayerXCenter(){
 		return player.getXCenter();
@@ -377,9 +315,16 @@ public class PossessionCanvas extends PossessionDriver {
 		}	
 		if(keys[17]){					// X
 
-		}	
+		}
+		
 		if(keys[18]){					// C
-			spawnRandomEnemy();
+			if(spawnBuffer == 0) {
+				spawnRandomEnemy();
+				spawnBuffer = 1;
+			}
+		}
+		else {
+			spawnBuffer = 0;
 		}
 		
 		if(keys[19]){					// SHIFT
