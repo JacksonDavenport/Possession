@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import Main.Logger;
 import Main.PossessionCanvas;
 
 public class Enemy extends Actor{
@@ -38,23 +39,35 @@ public class Enemy extends Actor{
 		direction = 0;
 		dead = false;
 		enemySpeed = 2;
+		super.setSpeed(enemySpeed);
 		halfSpeed = false;
 		moveCount = 0;
 		startingHealth = health = 10;
 		player = p;
+		
+		Logger.logDebug("Hash code for generated enemy is: " + this.hashCode());
 	}
 
 	public void act(Graphics2D win){
+		/*
 		if(!dead){
-			if(!player.isPossessed()){
-				move();	
-			}
-			drawActor(win);
+			
+
 		}
 		if(health <= 0)
 			die();
+		*/
+		Logger.logFinest("Draw Actor: " + toString());
+		drawActor(win);
 	}
 
+	public void passMovement(int dx, int dy) {
+		getHitBox().translate(dx,dy);
+		if(dx > 0)
+			direction = EAST;
+		else if(dx < 0)
+			direction = WEST;
+	}	
 
     /* 
      * Name: Move
@@ -67,6 +80,7 @@ public class Enemy extends Actor{
      * Void
      */
     public void move(){
+    	/*
     	//If the slow enemy moves on its turn then move, or if its not a slow enemy
 		if( (halfSpeed && moveCount % 2 == 1) || !halfSpeed ){
 			if(!clearingBuilding){
@@ -186,6 +200,7 @@ public class Enemy extends Actor{
 	
 		//For the enemies moving at half speed	
 		moveCount++;
+		*/
 	}
 	
 	/* 
@@ -197,6 +212,7 @@ public class Enemy extends Actor{
 	 * Void
 	 */
     public void clearBuilding(){
+    	/*
     	//If its touching a wall, uses its previous direction to guide it.
     	if(PossessionCanvas.touchingTopBottom(this) != 0 || PossessionCanvas.touchingLeftRight(this) != 0){
     		clearingBuilding = true;
@@ -221,6 +237,7 @@ public class Enemy extends Actor{
     	else{
     		clearingBuilding = false;
     	}
+    	*/
     }
 
 	/*
@@ -271,4 +288,5 @@ public class Enemy extends Actor{
     	return dead;
     }
 
+	
 }

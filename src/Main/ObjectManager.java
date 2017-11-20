@@ -13,6 +13,8 @@ public class ObjectManager implements ActionManager, MovementManager{
 		this.actor = a;
 	}
 	
+	public ObjectManager() {}
+	
 	public void action() {
 		
 	}
@@ -25,6 +27,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		if(hitbox.getLeft() <= 0)
 			return 0;
 		
+		dx = Math.abs(dx);
 		int distanceToMove = dx;
 		int distance;
 		for(int i = 0; i < objects.size(); i++) {
@@ -32,7 +35,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 			if(hitbox.getLeft() >= o.getRight() && withinVertical(hitbox, o)) {
 				distance = hitbox.getLeft() - o.getRight();
 				if(distance < dx) {
-					Logger.logFinest("Will collide left side with " + o.toString() + " with speed: " + dx);
+					Logger.logDebug("Will collide left side with " + o.toString() + " with speed: " + dx);
 					distanceToMove = Math.min(distanceToMove,  distance);
 				}
 			}
@@ -44,6 +47,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		if(hitbox.getRight() >= PossessionDriver.MAP_WIDTH)
 			return 0;
 		
+		dx = Math.abs(dx);
 		int distanceToMove = dx;
 		int distance;
 		for(int i = 0; i < objects.size(); i++) {
@@ -51,7 +55,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 			if(hitbox.getRight() <= o.getLeft() && withinVertical(hitbox, o)) {
 				distance = o.getLeft() - hitbox.getRight();
 				if(distance < dx) {
-					Logger.logFinest("Will collide right side with " + o.toString() + " with speed: " + dx);
+					Logger.logDebug("Will collide right side with " + o.toString() + " with speed: " + dx);
 					distanceToMove = Math.min(distanceToMove,  distance);
 				}
 			}
@@ -63,6 +67,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		if(hitbox.getTop() <= 0)
 			return 0;
 		
+		dy = Math.abs(dy);
 		int distanceToMove = dy;
 		int distance;
 		for(int i = 0; i < objects.size(); i++) {
@@ -70,7 +75,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 			if(hitbox.getTop() >= o.getBottom() && withinHorizontal(hitbox, o)) {
 				distance = hitbox.getTop() - o.getBottom();
 				if(distance < dy) {
-					Logger.logFinest("Will collide top side with " + o.toString() + " with speed: " + dy);
+					Logger.logDebug("Will collide top side with " + o.toString() + " with speed: " + dy);
 					distanceToMove = Math.min(distanceToMove,  distance);
 				}
 			}
@@ -82,6 +87,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		if(hitbox.getBottom() >= PossessionDriver.MAP_HEIGHT)
 			return 0;
 		
+		dy = Math.abs(dy);
 		int distanceToMove = dy;
 		int distance;
 		for(int i = 0; i < objects.size(); i++) {
@@ -89,7 +95,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 			if(hitbox.getBottom() <= o.getTop() && withinHorizontal(hitbox, o)) {
 				distance = o.getTop() - hitbox.getBottom();
 				if(distance < dy) {
-					Logger.logFinest("Will collide bottom side with " + o.toString() + " with speed: " + dx);
+					Logger.logDebug("Will collide bottom side with " + o.toString() + " with speed: " + dx);
 					distanceToMove = Math.min(distanceToMove, distance);
 				}
 			}
