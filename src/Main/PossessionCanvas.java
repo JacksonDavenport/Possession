@@ -1,4 +1,6 @@
 package Main;
+
+import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -258,66 +260,45 @@ public class PossessionCanvas extends PossessionDriver {
 	
 	//Additional Key Input method
 	public void getKeyInput(){
-		pauseTheGame();					// P
-		resetGame();					// R
+		pauseTheGame();// P
+		resetGame();   // R
 		
-		playerManager.handleMovement(keys[0],  keys[1],  keys[2],  keys[3], arena);
+		playerManager.handleMovement(keys[KeyEvent.VK_W],  keys[KeyEvent.VK_A],  keys[KeyEvent.VK_S],  keys[KeyEvent.VK_D], arena);
 	
-		if(keys[4]){					// SPACEBAR
+		if(keys[KeyEvent.VK_SPACE]){
 			// Go into possess mode
 			player.possessModeOn();
 		}
 		else{
 			player.possessModeOff();
 		}
-
-		if(keys[5]){					// Q
-		
-		}
-
-		if(keys[6]){					// E
-		
-		}
 			
-		if(keys[7] && gameState == MAIN_STATE){	// R
+		if(keys[KeyEvent.VK_R] && gameState == MAIN_STATE){	// R
 			//gun.manualReload();
 		}
 
-		if(keys[8]){					// P
 
-		}
 		
-		if(keys[9]){					// F
-
-		}	
-		if(keys[10]){					// G
-
-		}
-		
-		if(keys[11]){					// 1
+		if(keys[KeyEvent.VK_1]){
 			player.setSpeed(1);
 		}
-		if(keys[12]){					// 2
+		if(keys[KeyEvent.VK_2]){
 			player.setSpeed(2);
 		}
-		if(keys[13]){					// 3
+		if(keys[KeyEvent.VK_3]){
 			player.setSpeed(3);
 		}
-		if(keys[14]){					// 4
+		if(keys[KeyEvent.VK_4]){
 			player.setSpeed(4);
 		}
-		if(keys[15]){					// 5
+		if(keys[KeyEvent.VK_5]){
 			player.setSpeed(5);
 		}
-		
-		if(keys[16]){					// Z
-
-		}	
-		if(keys[17]){					// X
-
+		if(keys[KeyEvent.VK_6]) {
+			player.setSpeed(6);
 		}
-		
-		if(keys[18]){					// C
+				
+		if(keys[KeyEvent.VK_C]){
 			if(spawnBuffer == 0) {
 				spawnRandomEnemy();
 				spawnBuffer = 1;
@@ -327,17 +308,20 @@ public class PossessionCanvas extends PossessionDriver {
 			spawnBuffer = 0;
 		}
 		
-		if(keys[19]){					// SHIFT
+
+		
+		if(keys[KeyEvent.VK_ESCAPE]){
+			Logger.logInfo("Shutdown from escape button");
+			System.exit(0);
+		}
+		if(keys[KeyEvent.VK_CONTROL]){
+			Logger.setLogFinest();
+		}
+		if(keys[KeyEvent.VK_SHIFT]){
 			Logger.setLogDebug();
 		}
-		if(keys[20]){					// ENTER
-
-		}		
-		if(keys[21]){					// ESCAPE
-	
-		}
-		if(keys[22]){					// CONTROL
-			Logger.setLogFinest();
+		if(keys[KeyEvent.VK_CAPS_LOCK]){
+			Logger.setLogInfo();
 		}		
 		
 

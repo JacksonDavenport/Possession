@@ -42,7 +42,7 @@ public abstract class PossessionDriver extends Canvas implements KeyListener, Mo
 	public PossessionDriver() {
 		//	Set up all variables related to the game
 		// 	Number of key possibilities
-		keys = new boolean[23];
+		keys = new boolean[90];
 		mousePoint = new Point();
 		mousePressed = false;
 
@@ -81,60 +81,78 @@ public abstract class PossessionDriver extends Canvas implements KeyListener, Mo
 
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
-			case KeyEvent.VK_W : keys[0]=true; break;
-			case KeyEvent.VK_A : keys[1]=true; break;
-			case KeyEvent.VK_S : keys[2]=true; break;
-			case KeyEvent.VK_D : keys[3]=true; break;
-			case KeyEvent.VK_SPACE : keys[4]=true; break;
-			case KeyEvent.VK_Q : keys[5]=true; break;
-			case KeyEvent.VK_E : keys[6]=true; break;
-			case KeyEvent.VK_R : keys[7]=true; break;
-			case KeyEvent.VK_P : keys[8]=true; break;
-			case KeyEvent.VK_F : keys[9]=true; break;
-			case KeyEvent.VK_G : keys[10]=true;break;
+			case KeyEvent.VK_W : keys[KeyEvent.VK_W]=true; break;
+			case KeyEvent.VK_A : keys[KeyEvent.VK_A]=true; break;
+			case KeyEvent.VK_S : keys[KeyEvent.VK_S]=true; break;
+			case KeyEvent.VK_D : keys[KeyEvent.VK_D]=true; break;
 
-			case KeyEvent.VK_1 : keys[11]=true;	break;
-			case KeyEvent.VK_2 : keys[12]=true;	break;
-			case KeyEvent.VK_3 : keys[13]=true;	break;
-			case KeyEvent.VK_4 : keys[14]=true;	break;
-			case KeyEvent.VK_5 : keys[15]=true;	break;
-			case KeyEvent.VK_Z : keys[16]=true; break;
-			case KeyEvent.VK_X : keys[17]=true; break;
-			case KeyEvent.VK_C : keys[18]=true; break;
-			case KeyEvent.VK_SHIFT : keys[19]=true; break;
-			case KeyEvent.VK_ENTER : keys[20]=true; break;
-			case KeyEvent.VK_ESCAPE : keys[21]=true; break;
-			case KeyEvent.VK_CONTROL : keys[22]=true; break;
+			case KeyEvent.VK_Q : keys[KeyEvent.VK_Q]=true; break;
+			case KeyEvent.VK_E : keys[KeyEvent.VK_E]=true; break;
+			case KeyEvent.VK_R : keys[KeyEvent.VK_R]=true; break;
+			case KeyEvent.VK_P : keys[KeyEvent.VK_P]=true; break;
+			case KeyEvent.VK_F : keys[KeyEvent.VK_F]=true; break;
+			case KeyEvent.VK_G : keys[KeyEvent.VK_G]=true;break;
+
+			case KeyEvent.VK_0 : keys[KeyEvent.VK_0]=true;	break;
+			case KeyEvent.VK_1 : keys[KeyEvent.VK_1]=true;	break;
+			case KeyEvent.VK_2 : keys[KeyEvent.VK_2]=true;	break;
+			case KeyEvent.VK_3 : keys[KeyEvent.VK_3]=true;	break;
+			case KeyEvent.VK_4 : keys[KeyEvent.VK_4]=true;	break;
+			case KeyEvent.VK_5 : keys[KeyEvent.VK_5]=true;	break;
+			case KeyEvent.VK_6 : keys[KeyEvent.VK_6]=true;	break;
+			case KeyEvent.VK_7 : keys[KeyEvent.VK_7]=true;	break;
+			case KeyEvent.VK_8 : keys[KeyEvent.VK_8]=true;	break;
+			case KeyEvent.VK_9 : keys[KeyEvent.VK_9]=true;	break;			
+			
+			case KeyEvent.VK_Z : keys[KeyEvent.VK_Z]=true; break;
+			case KeyEvent.VK_X : keys[KeyEvent.VK_X]=true; break;
+			case KeyEvent.VK_C : keys[KeyEvent.VK_C]=true; break;
+			
+			case KeyEvent.VK_SPACE : keys[KeyEvent.VK_SPACE]=true; break;
+			case KeyEvent.VK_CONTROL : keys[KeyEvent.VK_CONTROL]=true; break;
+			case KeyEvent.VK_SHIFT : keys[KeyEvent.VK_SHIFT]=true; break;
+			case KeyEvent.VK_CAPS_LOCK : keys[KeyEvent.VK_CAPS_LOCK]=true; break;
+			case KeyEvent.VK_ENTER : keys[KeyEvent.VK_ENTER]=true; break;
+			case KeyEvent.VK_ESCAPE : keys[KeyEvent.VK_ESCAPE]=true; break;
 		}
 
 	}
 
 	public void keyReleased(KeyEvent e) {
 		switch(e.getKeyCode()) {
-			case KeyEvent.VK_W : keys[0]=false; 	break;
-			case KeyEvent.VK_A : keys[1]=false; 	break;
-			case KeyEvent.VK_S : keys[2]=false; 	break;
-			case KeyEvent.VK_D : keys[3]=false; 	break;
-			case KeyEvent.VK_SPACE : keys[4]=false; break;
-			case KeyEvent.VK_Q : keys[5]=false; 	break;
-			case KeyEvent.VK_E : keys[6]=false; 	break;
-			case KeyEvent.VK_R : keys[7]=false; 	break;
-			case KeyEvent.VK_P : keys[8]=false; 	break;
-			case KeyEvent.VK_F : keys[9]=false; 	break;
-			case KeyEvent.VK_G : keys[10]=false;	break;
-
-			case KeyEvent.VK_1 : keys[11]=false;	break;
-			case KeyEvent.VK_2 : keys[12]=false;	break;
-			case KeyEvent.VK_3 : keys[13]=false;	break;
-			case KeyEvent.VK_4 : keys[14]=false;	break;
-			case KeyEvent.VK_5 : keys[15]=false;	break;
-			case KeyEvent.VK_Z : keys[16]=false; 	break;
-			case KeyEvent.VK_X : keys[17]=false; 	break;
-			case KeyEvent.VK_C : keys[18]=false; 	break;
-			case KeyEvent.VK_SHIFT : keys[19]=false; break;
-			case KeyEvent.VK_ENTER : keys[20]=false; break;
-			case KeyEvent.VK_ESCAPE : keys[21]=false; break;
-			case KeyEvent.VK_CONTROL : keys[22]=false; break;
+			case KeyEvent.VK_W : keys[KeyEvent.VK_W]=false; break;
+			case KeyEvent.VK_A : keys[KeyEvent.VK_A]=false; break;
+			case KeyEvent.VK_S : keys[KeyEvent.VK_S]=false; break;
+			case KeyEvent.VK_D : keys[KeyEvent.VK_D]=false; break;
+	
+			case KeyEvent.VK_Q : keys[KeyEvent.VK_Q]=false; break;
+			case KeyEvent.VK_E : keys[KeyEvent.VK_E]=false; break;
+			case KeyEvent.VK_R : keys[KeyEvent.VK_R]=false; break;
+			case KeyEvent.VK_P : keys[KeyEvent.VK_P]=false; break;
+			case KeyEvent.VK_F : keys[KeyEvent.VK_F]=false; break;
+			case KeyEvent.VK_G : keys[KeyEvent.VK_G]=false;break;
+	
+			case KeyEvent.VK_0 : keys[KeyEvent.VK_0]=false;	break;
+			case KeyEvent.VK_1 : keys[KeyEvent.VK_1]=false;	break;
+			case KeyEvent.VK_2 : keys[KeyEvent.VK_2]=false;	break;
+			case KeyEvent.VK_3 : keys[KeyEvent.VK_3]=false;	break;
+			case KeyEvent.VK_4 : keys[KeyEvent.VK_4]=false;	break;
+			case KeyEvent.VK_5 : keys[KeyEvent.VK_5]=false;	break;
+			case KeyEvent.VK_6 : keys[KeyEvent.VK_6]=false;	break;
+			case KeyEvent.VK_7 : keys[KeyEvent.VK_7]=false;	break;
+			case KeyEvent.VK_8 : keys[KeyEvent.VK_8]=false;	break;
+			case KeyEvent.VK_9 : keys[KeyEvent.VK_9]=false;	break;			
+			
+			case KeyEvent.VK_Z : keys[KeyEvent.VK_Z]=false; break;
+			case KeyEvent.VK_X : keys[KeyEvent.VK_X]=false; break;
+			case KeyEvent.VK_C : keys[KeyEvent.VK_C]=false; break;
+			
+			case KeyEvent.VK_SPACE : keys[KeyEvent.VK_SPACE]=false; break;
+			case KeyEvent.VK_CONTROL : keys[KeyEvent.VK_CONTROL]=false; break;
+			case KeyEvent.VK_SHIFT : keys[KeyEvent.VK_SHIFT]=false; break;
+			case KeyEvent.VK_CAPS_LOCK : keys[KeyEvent.VK_CAPS_LOCK]=false; break;
+			case KeyEvent.VK_ENTER : keys[KeyEvent.VK_ENTER]=false; break;
+			case KeyEvent.VK_ESCAPE : keys[KeyEvent.VK_ESCAPE]=false; break;
 		}
 	}
 
