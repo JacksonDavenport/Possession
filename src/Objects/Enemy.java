@@ -61,14 +61,6 @@ public class Enemy extends Actor{
 		drawActor(win);
 	}
 
-	public void passMovement(int dx, int dy) {
-		getHitBox().translate(dx,dy);
-		if(dx > 0)
-			direction = EAST;
-		else if(dx < 0)
-			direction = WEST;
-	}	
-
     /* 
      * Name: Move
      * Purpose: Direct the enemies movement, will head in the direction of the player

@@ -15,6 +15,7 @@ public class Actor{
 	public final int WEST = 180;
 	public final int SOUTH = 270;
 
+	private int direction;
 	private int xVel, yVel;
 	private int width,height;
 	Rectangle  hitBox;
@@ -22,6 +23,7 @@ public class Actor{
 	private BufferedImage imageToDraw;
 
 	public Actor(int x, int y, int w, int h, Color c) {
+		direction = EAST;
 		col = c;
 		width = w;
 		height = h;
@@ -30,6 +32,7 @@ public class Actor{
 	}
 	
 	public Actor(int x, int y, int w, int h, BufferedImage i) {
+		direction = EAST;
 		col = null;
 		width = w;
 		height = h;
@@ -47,6 +50,14 @@ public class Actor{
 			win.drawImage(imageToDraw, getXPos(), getYPos(), null);
 		}
 	}
+	
+	public void passMovement(int dx, int dy) {
+		getHitBox().translate(dx,dy);
+		if(dx > 0)
+			direction = EAST;
+		else if(dx < 0)
+			direction = WEST;
+	}	
 
 	public void setWidth(int value){
 		width = value;

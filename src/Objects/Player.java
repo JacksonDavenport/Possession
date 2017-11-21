@@ -55,15 +55,7 @@ public class Player extends Actor{
 
 		drawActor(win);
 	}
-		
-	public void passMovement(int dx, int dy) {
-		getHitBox().translate(dx,dy);
-		if(dx > 0)
-			direction = EAST;
-		else if(dx < 0)
-			direction = WEST;
-	}
-	
+			
 	private void possessMove(){
 		Point mousePoint = canvas.getMousePosition();
 		int xPos = (int) mousePoint.getX();
