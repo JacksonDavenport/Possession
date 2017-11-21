@@ -1,9 +1,6 @@
 package Main;
 
-import java.util.ArrayList;
-
 import Objects.Actor;
-import Objects.Building;
 
 public interface MovementManager {
 	
