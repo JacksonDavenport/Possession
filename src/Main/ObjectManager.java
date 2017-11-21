@@ -8,22 +8,26 @@ import Objects.Building;
 public class ObjectManager implements ActionManager, MovementManager{
 
 	Actor actor;
+	ArrayList<Building> objects;
 	
-	public ObjectManager(Actor a) {
+	public ObjectManager(ArrayList<Building> objects, Actor a) {
 		this.actor = a;
+		this.objects = objects;
 	}
 	
-	public ObjectManager() {}
+	public ObjectManager(ArrayList<Building> objects) {
+		this.objects = objects;
+	}
 	
 	public void action() {
 		
 	}
 	
-	public void move(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
+	public void move(Actor hitbox, int dx, int dy) {
 		
 	}
 	
-	public int distanceRemainingLeftSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
+	public int distanceRemainingLeftSide(Actor hitbox, int dx, int dy) {
 		if(hitbox.getLeft() <= 0)
 			return 0;
 		
@@ -43,7 +47,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		return distanceToMove;
 	}
 	
-	public int distanceRemainingRightSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
+	public int distanceRemainingRightSide(Actor hitbox, int dx, int dy) {
 		if(hitbox.getRight() >= PossessionDriver.MAP_WIDTH)
 			return 0;
 		
@@ -63,7 +67,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		return distanceToMove;
 	}
 	
-	public int distanceRemainingTopSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
+	public int distanceRemainingTopSide(Actor hitbox, int dx, int dy) {
 		if(hitbox.getTop() <= 0)
 			return 0;
 		
@@ -83,7 +87,7 @@ public class ObjectManager implements ActionManager, MovementManager{
 		return distanceToMove;
 	}
 	
-	public int distanceRemainingBottomSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
+	public int distanceRemainingBottomSide(Actor hitbox, int dx, int dy) {
 		if(hitbox.getBottom() >= PossessionDriver.MAP_HEIGHT)
 			return 0;
 		
@@ -103,20 +107,29 @@ public class ObjectManager implements ActionManager, MovementManager{
 		return distanceToMove;
 	}
 	
-	public boolean willCollideLeftSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
-		return dx <= this.distanceRemainingLeftSide(hitbox, objects, dx, dy);
+	public void passMovement(Actor a, int dx, int dy) {
+		if(!willIntersectArena(a, dx, dy)) {
+			a.passMovement(dx,  dy);
+		}
+		else {
+			Logger.logError(a.toString() + " would have collided with the arena");
+		}
 	}
 	
-	public boolean willCollideRightSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
-		return dx <= this.distanceRemainingRightSide(hitbox, objects, dx, dy);
+	public boolean willCollideLeftSide(Actor hitbox, int dx, int dy) {
+		return dx <= this.distanceRemainingLeftSide(hitbox, dx, dy);
+	}
+	
+	public boolean willCollideRightSide(Actor hitbox, int dx, int dy) {
+		return dx <= this.distanceRemainingRightSide(hitbox, dx, dy);
 	}
 
-	public boolean willCollideTopSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
-		return dy <= this.distanceRemainingTopSide(hitbox, objects, dx, dy);
+	public boolean willCollideTopSide(Actor hitbox, int dx, int dy) {
+		return dy <= this.distanceRemainingTopSide(hitbox, dx, dy);
 	}
 
-	public boolean willCollideBottomSide(Actor hitbox, ArrayList<Building> objects, int dx, int dy) {
-		return dy <= this.distanceRemainingBottomSide(hitbox, objects, dx, dy);
+	public boolean willCollideBottomSide(Actor hitbox, int dx, int dy) {
+		return dy <= this.distanceRemainingBottomSide(hitbox, dx, dy);
 	}
 	
 	public boolean withinVertical(Actor hitbox, Actor object) {
@@ -133,6 +146,19 @@ public class ObjectManager implements ActionManager, MovementManager{
 	
 	public boolean intersectsObject(Actor a) {
 		return actor.getHitBox().intersects(a.getHitBox());
+	}
+	
+	public boolean willIntersectArena(Actor a, int dx, int dy) {
+		int x = a.getXPos() + dx;
+		int y = a.getYPos() + dy;
+		int w = a.getWidth();
+		int h = a.getHeight();
+		for(int i = 0; i < objects.size(); i++) {
+			if(objects.get(i).getHitBox().intersects(x,y,w,h)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void setActor(Actor a) {

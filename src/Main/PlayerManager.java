@@ -6,10 +6,11 @@ import Objects.Building;
 import Objects.Player;
 
 public class PlayerManager extends ObjectManager{
+	
 	private Player player;
 	
-	public PlayerManager(Player p) {
-		super(p);
+	public PlayerManager(ArrayList<Building> arena, Player p) {
+		super(arena, p);
 		player = p;
 	}
 	
@@ -18,15 +19,15 @@ public class PlayerManager extends ObjectManager{
 		int dy = 0;
 		
 		if(A)
-			dx -= super.distanceRemainingLeftSide(player,  arena,  player.getXVel(), player.getYVel());
+			dx -= super.distanceRemainingLeftSide(player,  player.getXVel(), player.getYVel());
 		if(D)
-			dx += super.distanceRemainingRightSide(player,  arena,  player.getXVel(), player.getYVel());
+			dx += super.distanceRemainingRightSide(player,  player.getXVel(), player.getYVel());
 		if(W)
-			dy -= super.distanceRemainingTopSide(player, arena, player.getXVel(), player.getYVel());
+			dy -= super.distanceRemainingTopSide(player, player.getXVel(), player.getYVel());
 		if(S)
-			dy += super.distanceRemainingBottomSide(player, arena, player.getXVel(), player.getYVel());
+			dy += super.distanceRemainingBottomSide(player, player.getXVel(), player.getYVel());
 		
-		player.passMovement(dx, dy);
+		super.passMovement(player, dx, dy);
 		logMovement(W, A, S, D);
 	}
 	

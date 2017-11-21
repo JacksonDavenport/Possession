@@ -50,8 +50,8 @@ public class PossessionCanvas extends PossessionDriver {
 				
 		createArena();
 		
-		playerManager = new PlayerManager(player);
-		enemyManager = new EnemyManager(player, arena);
+		playerManager = new PlayerManager(arena, player);
+		enemyManager = new EnemyManager(arena, player);
 	}
 
 	public void draw(Graphics2D win) {

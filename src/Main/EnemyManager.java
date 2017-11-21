@@ -13,13 +13,11 @@ import Objects.Player;
 public class EnemyManager extends ObjectManager{
 	
 	private HashMap<Integer, Enemy> enemiesMap;
-	private ArrayList<Building> arena;
 	private Player player;
 	
-	public EnemyManager(Player player, ArrayList<Building> arena) {
-		super();
+	public EnemyManager(ArrayList<Building> arena, Player player) {
+		super(arena);
 		this.player = player;
-		this.arena = arena;
 		enemiesMap = new HashMap<Integer, Enemy>();
 	}
 	
@@ -50,16 +48,16 @@ public class EnemyManager extends ObjectManager{
 		Logger.logFinest("Enemy movement prior to collision detection: (" + dx + ", " + dy + ") for enemy: " + enemy.toString() + " to destination: " + p);
 
 		if(dx > 0) {
-			dx = super.distanceRemainingRightSide(enemy, arena, dx, dy);
+			dx = super.distanceRemainingRightSide(enemy, dx, dy);
 		}
 		else if(dx < 0) {
-			dx = -1 * super.distanceRemainingLeftSide(enemy,  arena,  dx,  dy);
+			dx = -1 * super.distanceRemainingLeftSide(enemy, dx, dy);
 		}
 		if(dy > 0) {
-			dy = super.distanceRemainingBottomSide(enemy,  arena,  dx,  dy);
+			dy = super.distanceRemainingBottomSide(enemy, dx, dy);
 		}
 		else if(dy < 0 ) {
-			dy = -1 * super.distanceRemainingTopSide(enemy,  arena,  dx,  dy);
+			dy = -1 * super.distanceRemainingTopSide(enemy, dx, dy);
 		}
 		Logger.logFinest("Enemy movement after collision detection: (" + dx + ", " + dy + ") for enemy: " + enemy.toString() + " to destination: " + p);
 		
@@ -67,7 +65,7 @@ public class EnemyManager extends ObjectManager{
 			Logger.logError("Speed of: (" + dx + ", " + dy + ") too high for speed: (" + enemy.getXVel() + ", " + enemy.getYVel() + ")"); 
 		}
 		
-		enemy.passMovement(dx, dy);
+		super.passMovement(enemy, dx, dy);
 	}
 	
 	public int getDX(Enemy enemy, Point p) {
